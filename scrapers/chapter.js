@@ -17,8 +17,10 @@ module.exports = async function chapter(url) {
 
         let page_url = base_url + url;
 
-        const pageData = await axios.get(page_url,{ });
-
+        const pageData = await axios.get(page_url,{headers: {
+            Cookie: "isAdult = 1"
+        } });
+        console.log(page_url);
 
         const $ = cheerio.load(pageData.data);
 
@@ -37,7 +39,7 @@ module.exports = async function chapter(url) {
         let pageLast = $(".pager-list-left > span >a").last().prev().text();
 
 
-
+        console.log(cfunUrl);
         for (let i = 1; i <= pageLast; i++) {
             let isLast = false;
 
@@ -76,6 +78,7 @@ module.exports = async function chapter(url) {
     }
 
     await Promise.all(promises);
+    console.log(chapter.length);
     chapter.sort((a,b) => {
         return (a.index - b.index);
     });
