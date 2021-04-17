@@ -45,7 +45,7 @@ module.exports = async function manga(page) {
 
 
                 });
-            }).catch(err => alert(err));
+            }).catch(err => console.log(err));
 
             page_num++;
 
