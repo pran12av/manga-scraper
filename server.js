@@ -12,25 +12,37 @@ const port = process.env.PORT || 4000;
 // if you visit /chapter/
 app.get('/chapter/*', (req, res) => {
 
-    chapter(req.params[0]).then(function(value){
-        res.json(value);
-    });
+    try {
+        chapter(req.params[0]).then(function (value) {
+            res.json(value);
+        });
+    } catch (err) {
+        console.log(err);
+    }
 });
 
 // if you visit /info/
 app.get('/info/*', (req, res) => {
 
-    mangaInfo(req.params[0]).then(function(value){
-        res.json(value);
-    });
+    try {
+        mangaInfo(req.params[0]).then(function (value) {
+            res.json(value);
+        });
+    } catch (err) {
+        console.log(err);
+    }
 });
 
 // if you visit /manga/
 app.get('/manga/:page_num', (req, res) => {
 
-    manga(req.params.page_num).then(function(value){
-        res.json(value);
-    });
+    try {
+        manga(req.params.page_num).then(function (value) {
+            res.json(value);
+        });
+    } catch (err) {
+        console.log(err);
+    }
 });
 
 // if you visit home
