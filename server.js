@@ -15,7 +15,7 @@ app.get('/chapter/*', (req, res) => {
     try {
         chapter(req.params[0]).then(function (value) {
             res.json(value);
-        });
+        }).catch(err => alert(err));
     } catch (err) {
         console.log(err);
     }
@@ -27,7 +27,7 @@ app.get('/info/*', (req, res) => {
     try {
         mangaInfo(req.params[0]).then(function (value) {
             res.json(value);
-        });
+        }).catch(err => alert(err));
     } catch (err) {
         console.log(err);
     }
@@ -39,7 +39,7 @@ app.get('/manga/:page_num', (req, res) => {
     try {
         manga(req.params.page_num).then(function (value) {
             res.json(value);
-        });
+        }).catch(err => alert(err));
     } catch (err) {
         console.log(err);
     }
