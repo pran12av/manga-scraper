@@ -41,12 +41,13 @@ module.exports = async function chapter(url) {
 
         console.log(cfunUrl);
         console.log(cid);
-        
+
         for (let i = 1; i <= pageLast; i++) {
             let isLast = false;
 
             try {
                 const $ = require("jquery")(dom.window);
+                console.log("here");
                 promises.push($.ajax({
                     url: cfunUrl,
                     data: { cid: cid, page: i },
@@ -57,7 +58,7 @@ module.exports = async function chapter(url) {
 
                         eval(msg);
                         var arr = d;
-
+                        console.log(msg);
                         const tmp = {
                             index: i,
                             imageUrl: "https:" + arr[0],
