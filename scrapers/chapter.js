@@ -40,6 +40,8 @@ module.exports = async function chapter(url) {
 
 
         console.log(cfunUrl);
+        console.log(cid);
+        
         for (let i = 1; i <= pageLast; i++) {
             let isLast = false;
 
