@@ -24,11 +24,12 @@ module.exports = async function mangaInfo(url) {
             }
         });
         
+        console.log(pageData.data)
         const $ = cheerio.load(pageData.data);
-        console.log($);
+        
 
         $(".detail-main-list > li").each((index, obj) => {
-
+            console.log("inside");
             const aRef = $(obj).find("a");
             const div = $(obj).find("a > div > p").first().text();
         
