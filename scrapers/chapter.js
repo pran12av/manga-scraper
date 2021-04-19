@@ -36,14 +36,14 @@ module.exports = async function chapter(url) {
 
         // calculate total pages
 
-        let pageLast = $(".pager-list-left > span >a").last().prev().text();
+        let pageLast = $(".pager-list-left > span > a").last().prev().text();
 
 
         console.log(cfunUrl);
         console.log(cid);
         console.log(pageLast);
 
-        for (let i = 1; i <= pageLast; i++) {
+        for (let i = 1; i <= 10; i++) {
             let isLast = false;
 
             try {
