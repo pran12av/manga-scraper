@@ -21,7 +21,7 @@ module.exports = async function chapter(url) {
             Cookie: "isAdult = 1"
         } });
         console.log(page_url);
-
+        console.log(pageData.data);
         const $ = cheerio.load(pageData.data);
 
         let checker = $($("body > script").get(7)).html();
