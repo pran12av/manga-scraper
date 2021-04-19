@@ -41,6 +41,7 @@ module.exports = async function chapter(url) {
 
         console.log(cfunUrl);
         console.log(cid);
+        console.log(pageLast);
 
         for (let i = 1; i <= pageLast; i++) {
             let isLast = false;
