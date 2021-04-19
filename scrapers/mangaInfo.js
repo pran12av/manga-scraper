@@ -23,6 +23,7 @@ module.exports = async function mangaInfo(url) {
                 Cookie: "isAdult = 1"
             }
         });
+        console.log(pageData.data);
         const $ = cheerio.load(pageData.data);
 
         $(".detail-main-list > li").each((index, obj) => {
@@ -56,7 +57,7 @@ module.exports = async function mangaInfo(url) {
         console.log(err);
     }
 
-    console.log(chapters);
+    //console.log(chapters);
 
     return {
         description : p,
