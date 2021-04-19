@@ -23,8 +23,9 @@ module.exports = async function mangaInfo(url) {
                 Cookie: "isAdult = 1"
             }
         });
-        console.log(pageData.data);
+        
         const $ = cheerio.load(pageData.data);
+        console.log($);
 
         $(".detail-main-list > li").each((index, obj) => {
 
