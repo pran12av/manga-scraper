@@ -35,6 +35,7 @@ module.exports = async function mangaInfo(url) {
                 url: aRef[0].attribs.href,
             }
 
+            
 
             chapters.push(tmp);
         });
@@ -55,6 +56,7 @@ module.exports = async function mangaInfo(url) {
         console.log(err);
     }
 
+    console.log(chapters);
 
     return {
         description : p,
