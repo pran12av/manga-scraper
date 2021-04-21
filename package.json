@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start" : "node server.js"
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
@@ -14,8 +14,10 @@
     "cheerio": "^1.0.0-rc.3",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "https-proxy-agent": "^5.0.0",
     "jquery": "^3.6.0",
-    "jsdom": "^16.5.2"
+    "jsdom": "^16.5.2",
+    "node-fetch": "^2.6.1"
   },
   "engines": {
     "node": "14.16.0",

@@ -1,16 +1,18 @@
 const cheerio = require('cheerio');
-const axios = require('axios');
+const fetch = require('node-fetch');
+const HttpsProxyAgent = require('https-proxy-agent');
 require('dotenv').config();
 
 const base_url = process.env.BASE_URL;
-
+const proxy = process.env.PROXY;
 
 module.exports = async function mangaInfo(url) {
 
     let chapters = [];
     let promises = [];
-    let p;
+    let p, imageUrl;
     let genres = [];
+
 
 
     try {
@@ -18,32 +20,31 @@ module.exports = async function mangaInfo(url) {
 
         let page_url = base_url + url;
 
-        const pageData = await axios.get(page_url, {
-            headers: {
-                Cookie: "isAdult = 1"
-            }
+        const pageData = await fetch(page_url, {
+            method: 'get',
+            headers: { Cookie: "isAdult = 1" },
+            agent: new HttpsProxyAgent(proxy),
         });
-        
-        console.log(pageData.data)
-        const $ = cheerio.load(pageData.data);
-        
+
+        const data = await pageData.text();
+
+        const $ = cheerio.load(data);
+
 
         $(".detail-main-list > li").each((index, obj) => {
-            console.log("inside");
+            
             const aRef = $(obj).find("a");
             const div = $(obj).find("a > div > p").first().text();
-        
+
             const tmp = {
                 title: div,
                 url: aRef[0].attribs.href,
             }
 
-            
-
             chapters.push(tmp);
         });
 
-        
+        // genre
         $(".detail-info-right-tag-list > a").each((index, obj) => {
 
             const genre = $(obj).text();
@@ -51,9 +52,15 @@ module.exports = async function mangaInfo(url) {
         });
 
 
+        // description
         p = $(".fullcontent").text();
 
+        // cover image
+        const imageDiv = $(".detail-info-cover");
+        const img = $(imageDiv).find("img");
 
+        imageUrl = img[0].attribs.src;
+        
 
     } catch (err) {
         console.log(err);
@@ -62,9 +69,10 @@ module.exports = async function mangaInfo(url) {
     //console.log(chapters);
 
     return {
-        description : p,
-        genres : genres,
-        chapters : chapters,
+        description: p,
+        genres: genres,
+        chapters: chapters,
+        imageUrl: imageUrl,
     }
 
 }

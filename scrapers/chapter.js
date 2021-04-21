@@ -1,10 +1,12 @@
 const cheerio = require('cheerio');
-const axios = require('axios');
-const jsdom = require('jsdom')
+const jsdom = require('jsdom');
+const fetch = require('node-fetch');
+const HttpsProxyAgent = require('https-proxy-agent');
 const dom = new jsdom.JSDOM("");
 require('dotenv').config();
 
 const base_url = process.env.BASE_URL;
+const proxy = process.env.PROXY;
 
 module.exports = async function chapter(url) {
 
@@ -17,12 +19,16 @@ module.exports = async function chapter(url) {
 
         let page_url = base_url + url;
 
-        const pageData = await axios.get(page_url,{headers: {
-            Cookie: "isAdult = 1"
-        } });
-        console.log(page_url);
-        console.log(pageData.data);
-        const $ = cheerio.load(pageData.data);
+        const pageData = await fetch(page_url, {
+            method: 'get',
+            headers: { Cookie: "isAdult = 1" },
+            agent: new HttpsProxyAgent(proxy),
+        });
+
+        const data = await pageData.text();
+
+        
+        const $ = cheerio.load(data);
 
         let checker = $($("body > script").get(7)).html();
         let reg = /chapterid.*?;/g;
@@ -39,16 +45,13 @@ module.exports = async function chapter(url) {
         let pageLast = $(".pager-list-left > span > a").last().prev().text();
 
 
-        console.log(cfunUrl);
-        console.log(cid);
-        console.log(pageLast);
 
-        for (let i = 1; i <= 10; i++) {
+        for (let i = 1; i <= pageLast; i++) {
             let isLast = false;
 
             try {
                 const $ = require("jquery")(dom.window);
-                console.log("here");
+               
                 promises.push($.ajax({
                     url: cfunUrl,
                     data: { cid: cid, page: i },
@@ -59,7 +62,7 @@ module.exports = async function chapter(url) {
 
                         eval(msg);
                         var arr = d;
-                        console.log(msg);
+                        
                         const tmp = {
                             index: i,
                             imageUrl: "https:" + arr[0],
@@ -82,7 +85,7 @@ module.exports = async function chapter(url) {
     }
 
     await Promise.all(promises);
-    console.log(chapter.length);
+    
     chapter.sort((a,b) => {
         return (a.index - b.index);
     });
