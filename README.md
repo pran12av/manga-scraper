@@ -56,4 +56,4 @@ A rest api to obtain manga information by scraping a site.
 
     example : /chapter/manga/go_go_purin_teikoku/v02/c036/1.html
 
-
+[hosted on opeNode.io](https://www.openode.io/)
