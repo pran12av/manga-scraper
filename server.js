@@ -7,7 +7,7 @@ const mangaInfo = require('./scrapers/mangaInfo');
 const chapter = require('./scrapers/chapter');
 
 const app = express();
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 5000;
 
 // if you visit /chapter/
 app.get('/chapter/*', (req, res) => {

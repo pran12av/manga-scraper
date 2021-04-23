@@ -15,14 +15,15 @@ module.exports = async function manga(page) {
         try {
 
 
-            let page_url = base_url + `/directory/${page_num}.html`;
+            let page_url = base_url + `directory/${page_num}.html`;
 
-            const promise = axios.get(page_url);
-            promises.push(promise);
+            const pageData = await axios.get(page_url);
+            //promises.push(promise);
 
             if (page_num > 100*page) break;
 
-            promise.then(function (pageData) {
+            //promise.then(function (pageData) {
+                //console.log(pageData.data);
                 const $ = cheerio.load(pageData.data);
 
                 const checker = $(".manga-list-1-list > li");
@@ -45,7 +46,7 @@ module.exports = async function manga(page) {
 
 
                 });
-            }).catch(err => console.log(err));
+            //}).catch(err => console.log(err));
 
             page_num++;
 
