@@ -21,7 +21,7 @@ module.exports = async function manga(page) {
             //promises.push(promise);
 
             if (page_num > 100*page) break;
-
+            console.log(page_num);
             //promise.then(function (pageData) {
                 //console.log(pageData.data);
                 const $ = cheerio.load(pageData.data);
