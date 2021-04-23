@@ -35,7 +35,7 @@ app.get('/info/*', (req, res) => {
 
 // if you visit /manga/
 app.get('/manga/:page_num', (req, res) => {
-
+    console.log(1);
     try {
         manga(req.params.page_num).then(function (value) {
             res.json(value);
@@ -56,7 +56,6 @@ app.listen(port, () => {
 });
 
 
-const base_url = "https://fanfox.net";
 
 
 
