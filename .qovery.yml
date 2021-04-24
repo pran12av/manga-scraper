@@ -1,10 +1,11 @@
+---
 application:
-  name: scraper-manga
-  project: scraer-manga
-  publicly_accessible: true
+  name: "manga-scraper"
+  project: "scraper-manga"
+  organization: "QoveryCommunity"
 routers:
-- name: main
+- name: "main-manga-scraper"
   routes:
-  - application_name: scraper-manga
+  - application_name: "manga-scraper"
     paths:
-    - /
+    - "/*"
