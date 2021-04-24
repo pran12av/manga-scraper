@@ -1,8 +1,0 @@
-applications:
-- name: manga-scraper
-  buildpacks: 
-  - nodejs_buildpack
-  random-route: true
-  command: npm run start
-  services:
-  env:

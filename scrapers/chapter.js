@@ -22,7 +22,7 @@ module.exports = async function chapter(url) {
         const pageData = await fetch(page_url, {
             method: 'get',
             headers: { Cookie: "isAdult = 1" },
-            agent: new HttpsProxyAgent(proxy),
+            //agent: new HttpsProxyAgent(proxy),
         });
 
         const data = await pageData.text();
