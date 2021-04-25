@@ -27,16 +27,18 @@ module.exports = async function chapter(url) {
 
         const data = await pageData.text();
 
-        
-        const $ = cheerio.load(data);
 
-        let checker = $($("body > script").get(7)).html();
+        const $ = cheerio.load(data);
+        //console.log(data);
+        // let checker = $($("body > script").get(7)).html();
+        // console.log(checker);
         let reg = /chapterid.*?;/g;
-        let res = reg.exec(checker).toString();
+        let res = reg.exec(data).toString();
+        //console.log(res);
         reg = /chapterid/;
         let cid = res.replace(reg, "").replace(" ", "").replace(";", "").replace("=", "");
 
-
+        //console.log(cid);
         let cfunUrl = page_url.substring(0, page_url.lastIndexOf('/') + 1) + "chapterfun.ashx";
 
 
@@ -45,48 +47,59 @@ module.exports = async function chapter(url) {
         let pageLast = $(".pager-list-left > span > a").last().prev().text();
 
 
+        //console.log(pageLast);
 
-        for (let i = 1; i <= pageLast; i++) {
-            let isLast = false;
-
-            try {
-                const $ = require("jquery")(dom.window);
-               
-                promises.push($.ajax({
-                    url: cfunUrl,
-                    data: { cid: cid, page: i },
-                    type: 'GET',
-                    error: function (msg) {
-                    },
-                    success: function (msg) {
-
-                        eval(msg);
-                        var arr = d;
-                        
-                        const tmp = {
-                            index: i,
-                            imageUrl: "https:" + arr[0],
-                        }
-
-                        chapter.push(tmp);
-                        
-
-                    }
-                }));
-            } catch (err) {
-                console.log(err);
-            }
-
-
+        if (!   pageLast) {
+            let reg = /imagecount.*?;/g;
+            let res = reg.exec(data).toString();
+            //console.log(res);
+            reg = /imagecount/;
+            pageLast = res.replace(reg, "").replace(" ", "").replace(";", "").replace("=", "");
+            pageLast = parseInt(pageLast);
         }
+            
+            for (let i = 1; i <= pageLast; i++) {
+                let isLast = false;
+
+                try {
+                    const $ = require("jquery")(dom.window);
+
+                    promises.push($.ajax({
+                        url: cfunUrl,
+                        data: { cid: cid, page: i },
+                        type: 'GET',
+                        error: function (msg) {
+                        },
+                        success: function (msg) {
+
+                            eval(msg);
+                            var arr = d;
+
+                            const tmp = {
+                                index: i,
+                                imageUrl: "https:" + arr[0],
+                            }
+
+                            chapter.push(tmp);
+
+
+                        }
+                    }));
+                } catch (err) {
+                    console.log(err);
+                }
+
+
+            
+        } 
 
     } catch (err) {
         console.log(err);
     }
 
     await Promise.all(promises);
-    
-    chapter.sort((a,b) => {
+
+    chapter.sort((a, b) => {
         return (a.index - b.index);
     });
     return chapter;
